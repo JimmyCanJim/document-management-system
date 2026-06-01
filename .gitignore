@@ -1,0 +1,67 @@
+# =========================
+# Python & Django
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# =========================
+# Virtual Environments
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.local
+.env.*.local
+
+# =========================
+# Node.js & Vite (Frontend)
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+npm-debug.log*
+
+# Auto-generated Vite build assets in Django
+# (We ignore these because they should be generated on your deployment server)
+core/static/dist/
+
+# =========================
+# Sphinx Documentation
+# =========================
+# Ignore the built HTML/PDF files, keep only the RST source
+docs/_build/
+sphinxdoc/_build/
+_build/
+
+# =========================
+# Celery
+# =========================
+celerybeat-schedule
+celerybeat.pid
+*.pid
+
+# =========================
+# OS & IDE Files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
