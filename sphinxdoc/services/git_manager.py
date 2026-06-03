@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 class Repository:
     """Git repository management utility class."""
     
+    
     def __init__(self, repo, path, branch=None, credentials = getattr(settings, "VERSION_CONTROL_CREDENTIALS", {}).get("git", None), timeout = 300):
         """
         Initialize Git repository manager.
@@ -37,10 +38,12 @@ class Repository:
         self.timeout = timeout        
         # Note : self.is_ssh -> self.encrypted
         
+
     @property
     def encrypted(self):
         return self.repo.startswith('git@') or self.repo.startswith('ssh://')
     
+
     @property
     def repository(self):
         repo = urlparse(self.repo)
@@ -53,6 +56,7 @@ class Repository:
             return f"{repo.scheme}://:{token}@{repo.netloc}{repo.path}"
         else :
             return self.repo
+
 
     @property
     def environment(self):
@@ -71,14 +75,7 @@ class Repository:
             ssh_key = getattr(settings, 'SPHINXDOC_SSH_KEY_PATH', None)
             if ssh_key:
                 env['GIT_SSH_COMMAND'] = f'ssh -i {ssh_key} -o StrictHostKeyChecking=no'
-        # else:
-        #     # HTTPS authentication - use access token if available
-        #     token = getattr(settings, 'SPHINXDOC_GITHUB_TOKEN', None)
-        #     if token:
-        #         # Modify URL to include token
-        #         parsed = urlparse(self.repo)
-        #         if parsed.scheme in ('http', 'https'):
-        #             self.repo = f"{parsed.scheme}://:{token}@{parsed.netloc}{parsed.path}"        
+    
         return env
     
     @property

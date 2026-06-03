@@ -1,8 +1,20 @@
 import re
 from django.core.exceptions import ValidationError
 
+
 def validate_relative_path(value):
-    """Validate whether ``value`` is a safe, relative path."""
+
+    """Validates that any given string is a safe, relative file or directory path. This makes sure that the path does not point to an absolute path.
+
+    Args:
+        value (str): The directory or file path to validate.
+
+    Raises:
+        ValidationError: If the path is absolute.
+        ValidationError: If the path contains empty segments.
+        ValidationError: If the path contains invalid characters.
+    """
+
     if not value:
         return
 
@@ -26,8 +38,18 @@ def validate_relative_path(value):
                 f"'{value}' contains invalid characters or illegal directory traversal dots (..)."
             )
 
+
 def validate_repository_url(value):
-    """Validate whether a repository URL is properly formatted and accessible."""
+    
+    """Validates that a correctly formatted Git repository URL that is accessable
+
+    Args:
+        value (str): The Git repository URL to validate.
+
+    Raises:
+        ValidationError: If the URL does not match known Git URL formats.
+    """
+    
     if not value:
         return 
     
@@ -40,8 +62,18 @@ def validate_repository_url(value):
             "Must be a valid Git URL (HTTPS, SSH, or Git protocol)."
         )
 
+
 def validate_branch_name(value):
-    """Validate that a branch name follows strict Git naming conventions."""
+    
+    """Validates that a string is a safe and strictly formatted Git branch name.
+    Args:
+        value (str): The Git branch name to validate.
+
+    Raises:
+        ValidationError: If the Git branch name contains illegal characters.
+        ValidationError: If  the Git branch name is too long.
+    """    
+
     if not value:
         return 
     
