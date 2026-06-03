@@ -3,7 +3,7 @@
 ## Summary
 Maintaining up-to-date, highly reusable softawre documentation is a challenge for engineering teams. Traditional static site genartors (like Sphinx or MkDocs) takes a lot of effort and admin to maintain due to the application feeling disconnected from the main ecosystem. 
 
-This project proposes the ddevelopment of a Monolithic Document Management System. By using an asyncronous dependency (celery) witha Django-to-React bridge (Inertia.js), this system will automatically take in data and seamlessly output documentation without any latency. This minimizes the tedious development and maintance that software developers have to do manually.
+This project proposes the development of a Monolithic Document Management System. By using an asyncronous dependency (celery) witha Django-to-React bridge (Inertia.js), this system will automatically take in data and seamlessly output documentation without any latency. This minimizes the tedious development and maintance that software developers have to do manually.
 
 ## Project Structure:
 ```text
