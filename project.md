@@ -1,4 +1,9 @@
-#  Document Management System - Project Proposal
+#  Document Management System
+
+## Summary
+Maintaining up-to-date, highly reusable softawre documentation is a challenge for engineering teams. Traditional static site genartors (like Sphinx or MkDocs) takes a lot of effort and admin to maintain due to the application feeling disconnected from the main ecosystem. 
+
+This project proposes the development of a Monolithic Document Management System. By using an asyncronous dependency (celery) witha Django-to-React bridge (Inertia.js), this system will automatically take in data and seamlessly output documentation without any latency. This minimizes the tedious development and maintance that software developers have to do manually.
 
 ## Project Structure:
 ```text
@@ -144,12 +149,35 @@ _This is a custom Django application that handles all of the backgound logic, da
 - tests.py
 - urls.py -> The routing area. It maps specific URL's to the appropriate functions in the `views.py` file.
 - validators.py -> Contains custopm rules for checking data integrity.
-- views.py -> The controllers. These functions recieve web requests from the user, query the databse via `models.py`, and return `render_inertia()` reponses to feeed data into the React components.
+- views.py -> The controllers. These functions recieve web requests from the user, query the databse via `models.py`, and return `render_inertia()` reponses to feed data into the React components.
 
-## The three core phases:
-### 1. The Communications Bridge. (`views.py` and `main.jsx`)
-`views.py` should use inertia to send data contexts directly to the frontend. `main.jsx` uses that data to render the correct React components dynamically.
-### 2. The Asyncronous Workers (`task.py` and `celery.py`)
-Configuring `celery.py` to listen for background jobs, and making `tasks.py` to trigger the `git_manager.p` and `sphinx_compiler.py` completely behind the scenes.
-### 3. The Dynamic React UI (`Dashboard.jsx` and `DocumentViewer.jsx`)
-Accepting parsed Sphinx JSON data in the react components and safely injecting the HTML fragments into the `DocumentViewer.jsx` using Tailwind CSS for styling. 
+## System Architecture & Data Flow:
+### 1. Core Components:
+![Core Components](assets/components.png)
+
+### 2. Async Flow:
+![Asynchronous Background Flow](assets/backend.png)
+
+### 3. Sync Flow:
+![Syncronous User Request Flow](assets/request.png)
+
+
+## Project Assets:
+### Quick Local Project Navigation:
+| Component | Direct Link | Description
+| :--- | :--- | :--- |
+| **Frontend UI** | [![`/frontend/src`](https://img.shields.io/badge/Frontend-React_%26_Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)](./frontend/src) | The React components, Tailwind styling, and Inertia entry points. |
+| **Core Settings** | [![`/core/`](https://img.shields.io/badge/Backend-Django_Core-092E20?style=for-the-badge&logo=django&logoColor=white)](./core) | Django configuration, database routing, and Celery engine setup. |
+| **Background Services** | [![`/sphinxdoc/services/`](https://img.shields.io/badge/Services-Python_Workers-3776AB?style=for-the-badge&logo=python&logoColor=white)](./sphinxdoc/services) | The Python logic for Git cloning and Sphinx JSON compilation. |
+| **Database Schema** | [![`models.py`](https://img.shields.io/badge/Database-PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](./sphinxdoc/models.py) | The PostgreSQL blueprints for Projects and Documents. |
+| **Task Queue** | [![`tasks.py`](https://img.shields.io/badge/Task_Queue-Celery-37814A?style=for-the-badge&logo=celery&logoColor=white)](./sphinxdoc/tasks.py) | The Celery worker instructions that string the services together. | 
+
+### Quick GitHub Project Navigation:
+[![React Frontend](https://img.shields.io/badge/Frontend-React_%26_Vite-1f2328?style=for-the-badge&logo=github)](https://github.com/JimmyCanJim/document-management-system/tree/main/frontend/src)
+[![Django Backend](https://img.shields.io/badge/Backend-Django_Core-1f2328?style=for-the-badge&logo=github)](https://github.com/JimmyCanJim/document-management-system/tree/main/core)
+[![Sphinx Services](https://img.shields.io/badge/Services-Python_Workers-1f2328?style=for-the-badge&logo=github)](https://github.com/JimmyCanJim/document-management-system/tree/main/sphinxdoc/sevices)
+[![Database Models](https://img.shields.io/badge/Database-PostgreSQL-1f2328?style=for-the-badge&logo=github)](https://github.com/JimmyCanJim/document-management-system/tree/main/sphinxdoc/models.py)
+
+
+### Issue board GitHub:
+[![Issue Board](https://img.shields.io/badge/GitHub-Project_Board-1f2328?style=for-the-badge&logo=github)](https://github.com/users/JimmyCanJim/projects/4)
