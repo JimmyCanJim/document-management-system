@@ -13,7 +13,19 @@ from django.contrib.postgres.indexes import GinIndex
 from sphinxdoc.validators import validate_relative_path
 
 class Project(models.Model):
-    """Represents a Sphinx project repository and configuration."""
+    
+    """Represents a tracked Sphinx project repository and its local configuration.
+
+    Attributes:
+        name (str): Name of the project.
+        slug (str): A unique identifier generated from the name.
+        repo (str): The remote Git URL to clone from.
+        root (str): The safe, local directory name for the cloned repository.
+        source (str): The relative path inside the repo containing the source files.
+        target (str): The relative path where Sphinx outputs the compiled JSON files.
+        created (datetime): Timestamp of when the project was registered.
+        deleted (datetime): Timestamp of when the project was deleted.
+    """
     
     name = models.CharField(_("project"), max_length=100)
     slug = models.SlugField(unique=True, blank=True, max_length=100)
@@ -46,11 +58,20 @@ class Project(models.Model):
         verbose_name = _('project')
         verbose_name_plural = _('projects')
 
+
     def __str__(self):
         return self.name
 
+
     def save(self, *args, **kwargs):
-        """Auto-generate slug and root paths cleanly before saving."""
+        
+        """Overrides the default save behaviour to auto-generate missing paths.
+
+        Args:
+            *args: Variable length argument list passed to the parent save method.
+            **kwargs: Arbitrary keyword arguments passed to the parent save method.
+        """
+
         if not self.slug:
             base_slug = slugify(self.name)
             slug = base_slug
@@ -65,13 +86,27 @@ class Project(models.Model):
             
         super().save(*args, **kwargs)
 
+
     def get_absolute_path(self):
-        """Helper to get the full absolute path on the file system."""
+        
+        """Gets the absolute local file system path for the project.
+
+        Returns:
+            Path: A pathlib object pointing to the absolute directory where the git repository will be stored in the media root.
+        """
+
         base_dir = getattr(settings, 'MEDIA_ROOT', settings.BASE_DIR / 'media')
         return Path(base_dir) / 'repos' / self.root
 
+
     def import_documents(self):
-        """Crawls the built Sphinx JSON and updates the PostgreSQL database."""
+        
+        """Crawls the compiled Sphinx JSON files and ingests them into the databse.
+
+        Raises:
+            FileNotFoundError: If the target JSON build directory does not exist.
+        """
+
         SPECIAL_TITLES = {
             'genindex': 'General Index',
             'py-modindex': 'Module Index',
@@ -123,8 +158,19 @@ class Project(models.Model):
                 search_vector=SearchVector('title', weight='A') + SearchVector('body', weight='B')
             )
 
+
 class Document(models.Model):
-    """Represents a compiled document with full-text search indexing."""
+    
+    """Represents a compiled Sphinx document optimized for full-text search.
+
+    Attributes:
+        project (Project): The parent directory this document belongs too.
+        title (str): The title of the document page.
+        path (str): The relative URL path of the document.
+        body (str): The stripped text content used primarily for search weighting.
+        content (str): The raw, fully compiled JSON payload containing the HTML and metadata structure ready for frontend React rendering. 
+        search_vector (SearchVectorFiled): A dedicated PostgreSQL field that stores pre-calculated search tokens for high-speed querying.
+    """
     
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='documents')
     title = models.CharField(max_length=255)
