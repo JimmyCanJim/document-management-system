@@ -1,9 +1,9 @@
 #  Document Management System
 
 ## Summary
-Maintaining up-to-date, highly reusable softawre documentation is a challenge for engineering teams. Traditional static site genartors (like Sphinx or MkDocs) takes a lot of effort and admin to maintain due to the application feeling disconnected from the main ecosystem. 
+Maintaining up-to-date, highly reusable software documentation is a challenge for engineering teams. Traditional static site generators (like Sphinx or MkDocs) takes a lot of effort and admin to maintain due to the application feeling disconnected from the main ecosystem. 
 
-This project proposes the development of a Monolithic Document Management System. By using an asyncronous dependency (celery) witha Django-to-React bridge (Inertia.js), this system will automatically take in data and seamlessly output documentation without any latency. This minimizes the tedious development and maintance that software developers have to do manually.
+This project proposes the development of a Monolithic Document Management System by using an asynchronous dependency (celery) witha Django-to-React bridge (Inertia.js). his system will automatically take in data and seamlessly output documentation without any latency. This minimizes the tedious development and maintance that software developers have to do manually.
 
 ## Project Structure:
 ```text
@@ -91,7 +91,7 @@ document-management-system/
 ### `core/` :
 _This is the central part of the Django backend. It holds global configurations that dictate how the server operates._
 - `__pycache__/`
-- `templates/` -> Holds the global HTML layouts. `app.html` : This is the single HTML file sent to the browser. It loads the copiled Vite assets and serves as the empty container where Inertia mounts the React application.
+- `templates/` -> Holds the global HTML layouts. `app.html` : This is the single HTML file sent to the browser. It loads the compiled Vite assets and serves as the empty container where Inertia mounts the React application.
 - `__init__.py`
 - asgi.py -> [Asyncronous Server Gateway Interface] Used to deploy the app with async capabilities.
 - settings.py -> This is the master configuration file. It connects the database, registers the apps, sets up the Inertia middleware, and configures static file paths.
@@ -110,7 +110,7 @@ _This directory holds the entire client-side application. It is a fully function
         * VersionDropdown.jsx -> A selector that allows users to switch between different Git tags/version of those docs.
     * `Pages/` :
         * `Collaboration/` :
-            * InlineEditor.jsx -> A page with a code editor fro modifying Markdown/RST files in the browser.
+            * InlineEditor.jsx -> A page with a code editor for modifying Markdown/RST files in the browser.
             * VersionComparison.jsx -> A document displaying the visual differnce between two document versions.
         * `Management/` : 
             * AppRepository.jsx -> A form page for users to submit a new Git repository URL.
@@ -148,7 +148,7 @@ _This is a custom Django application that handles all of the backgound logic, da
 - tasks.py -> Defines asyncronous Celery jobs.
 - tests.py
 - urls.py -> The routing area. It maps specific URL's to the appropriate functions in the `views.py` file.
-- validators.py -> Contains custopm rules for checking data integrity.
+- validators.py -> Contains custom rules for checking data integrity.
 - views.py -> The controllers. These functions recieve web requests from the user, query the databse via `models.py`, and return `render_inertia()` reponses to feed data into the React components.
 
 ## System Architecture & Data Flow:

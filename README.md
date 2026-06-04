@@ -1,16 +1,16 @@
 # Document Management System
 
-This project is a monolithic application with asynchronous background workers. To run it locally, you will need to start the backend, the frontend, and the background task queue.
+This project is a monolithic application with asynchronous background workers. To run it locally, you will need to start the backend, the front-end, and the background task queue.
 
 ## Overview:
-The core problem most software developing teams in terms of collaboration, is the amount of documentation you need to make in order to keep everyone on the same page and track changes efficiently. The Document Management System will speed up this process faster, give developing teams a central hub to track and easily see changes in versions. We are using a legacy code-base to start off with, and then updating the tech-stack as we carry on. This ensures that we use more scalable and robust dependencies. This means that we should be able to do updates easier in the future, latency will be less and the central website should load dynamically without any stutters or outdated dependencies.
+The core problem most software developing teams have in terms of collaboration; is the amount of documentation you need to make in order to keep everyone on the same page and track changes efficiently. The Document Management System will speed up this process, give developing teams a central hub to track and easily see changes in versions. We are using a legacy code-base to start off with, and then updating the tech-stack as we carry on. This ensures that we use more scalable and robust dependencies. This means that we should be able to do updates smoothly in the future, latency will be less and the central website should load dynamically without any stutters or outdated dependencies.
 
 ## Key Features:
 - **Automatic Synchronization:** Webhook-driven listeners that automatically detect external repository updates and automatically trigger background syncing.
 - **Asynchronous Automation Engine:** Built on Celery and Redis, the backend queues and executes heavy operations without blocking the main web thread.
 - **Documentation Compilation:** Doesn't use traditional static site generation. It is done in a more dynamic way.
 - **API-Free Architecture:** We eliminated the need for a traditional REST API. Django routes intercept web requests and use Inertia to inject database payloads directly into React component properties.
-- **Fast SPA:** The frontend is a highly reactive Single Page Application built with React and Vite, providing snappy page transitions and real-time document rendering without browser reloads.
+- **Fast SPA:** The front-end is a highly reactive Single Page Application built with React and Vite, providing snappy page transitions and real-time document rendering without browser reloads.
 - **Centralized PostgreSQL Storage:** All project configurations, repository states, and compiled HTML document bodies are relationally mapped.
 
 ## Tech-Stack:
